@@ -1,0 +1,113 @@
+{
+    "fold": 1,
+    "epochs": 250,
+    "batch_size": 16,
+    "num_workers": 8,
+    "init_lr": 0.001,
+    "weights_init": "none",
+    "network": "resnet18",
+    "loss": "simsiam",
+    "output_folder": "/home/ftagalak/fvdl_ow/Experiments/NewTrainDataset",
+    "scripts_to_copy": [
+        "/home/ftagalak/fvdl_ow/Scripts/utils_scripts.py",
+        "/home/ftagalak/fvdl_ow/Scripts/ow_json_train.py",
+        "/home/ftagalak/fvdl_ow/Scripts/networks.py",
+        "/home/ftagalak/fvdl_ow/Scripts/layers.py",
+        "/home/ftagalak/fvdl_ow/Scripts/parameters.json"
+    ],
+    "train_csv_file": "/home/ftagalak/fvdl_ow/Data/2-fold/train_{current_fold}.csv",
+    "test_csv_file": "/home/ftagalak/fvdl_ow/Data/2-fold/test_{current_fold}.csv",
+    "optimizer": {
+        "type": "AdamW",
+        "options": {
+            "SGD": {
+                "momentum": 0.9,
+                "nesterov": true
+            },
+            "RMSprop": {
+                "momentum": 0.9,
+                "alpha": 0.99
+            },
+            "Adam": {
+                "betas": [0.9, 0.999],
+                "weight_decay": 1e-6
+            }
+        }
+    },
+    "scheduler": {
+        "type": "ReduceLROnPlateau",
+        "mode": "min",
+        "factor": 0.1,
+        "patience": 10,
+        "verbose": true,
+        "min_lr": 1e-6,
+        "options": {
+            "CosineAnnealingLR":{
+                "T_max": 200,
+                "eta_min": 1e-61
+            },
+            "ReduceLROnPlateau": {
+                "mode": "min",
+                "factor": 0.1,
+                "patience": 10,
+                "verbose": true,
+                "min_lr": 1e-6
+            },
+            "StepLR": {
+                "step_size": 50,
+                "gamma": 0.1
+            },
+            "OneCycleLR": {
+                "max_lr": 0.01,
+                "steps_per_epoch": 500,
+                "epochs": 100
+            }
+        }
+    },
+    "loss_terms": {
+        "CosineSimilarity": {
+            "weight": 1.0
+        },
+        "SymmetricKLDivLoss": {
+            "weight": 2.5
+        },
+        "CrossCovarianceLoss": {
+            "weight": 0.0
+        },
+        "InverseActivationFrequencyLoss":{
+            "weight": 0.0
+        },
+        "WeightsOrthogonalityLoss":{
+            "weight": 0.25
+        },
+        "CosFaceLoss":{
+            "weight": 0.0
+        },
+        "AVR":{
+            "weight": 0.0
+        },
+        "PrototypeLearning":{
+            "weight": 0.0
+        },
+        "DirectionalContrastiveLoss":{
+            "weight": 0.0
+        },
+        "ArccosineCenterLoss":{
+            "weight": 0.0
+        },
+        "AngularMarginContrastiveLoss":{
+            "weight": 0.0
+        },
+        "FFT_Loss":{
+            "weight": 0.0
+        },
+        "emd_loss":{
+            "weight": 0.0
+        },
+        "AdaptiveWeightedLoss":{
+            "weight": 0.0
+        }
+
+
+    }
+}
